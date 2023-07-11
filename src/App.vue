@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import UTopic from "./module/topic/views/UTopic.vue";
+// import UTopic from "./module/topic/views/UTopic.vue";
 import { LIST_TYPE } from "./module/topic/store";
 export default {
   name: 'App',
   components: {
-    UTopic
+    // UTopic
   },
   computed: {
     navs(){
