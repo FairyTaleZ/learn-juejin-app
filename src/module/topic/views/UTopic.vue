@@ -1,6 +1,6 @@
 <template>
     <div>
-        <u-list :item="items"></u-list>
+        <u-list :item="items" v-if="items.length > 0"></u-list>
         <div class="x-bottom" v-intersect="{ handler: fetchNext }"></div>
         <!-- 监听scroll事件，比对滚动距离+黑色块在页面的高度加上比较2个距离相对的差 -->
         <!-- intersectionObserver使用当黑色块出现在页面的时候加载下一页 -->
@@ -21,15 +21,14 @@ export default {
     },
     computed: {
         ...mapState({
-            items: state => state[state.activeType].items
+            items: state => state[state.activeType].items,
+            activeType: state => state.activeType
         })
     },
     created() {
-        // console.log('1111t',this.fetchData())
         this.fetchNext();
     },
     mounted(){
-        // this.fetchNext();
     },
     watch: {
         type(type) {

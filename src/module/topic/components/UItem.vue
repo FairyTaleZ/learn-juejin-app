@@ -1,11 +1,18 @@
 <template>
-    <a class="item" :href="node.originalUrl" :style="{ borderColor: theme.primary }">
+    <!-- <a class="item" :href="node.originalUrl" :style="{ borderColor: theme.primary }">
         <div class="title">{{node.title}}</div>
         <div :class="tags" v-if="hasTag">
             #
             <span class="tag" v-for="tag in node.tags" :key="tag.id">{{ tag.title }}</span>
         </div>
-    </a>
+    </a> -->
+
+    <div class="item" >
+        <div class="title">{{node.nickName}}</div>
+        <div>
+           {{node.contents[0].text}}
+        </div>
+    </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 
-import { fetchItems, _fetchItems } from "./api/api";
+import { fetchItems } from "./api/api";
 
 export const LIST_TYPE = {
     TOP: 'top',
@@ -37,26 +37,36 @@ export const store = {
         }
     },
     actions: {
-        _FETCH_LIST_DATA: ({ state, commit }, { type }) => {
-            commit("SET_ACTIVE_TYPE", { type });
+        // _FETCH_LIST_DATA: ({ state, commit }, { type }) => {
+        //     commit("SET_ACTIVE_TYPE", { type });
 
-            const after = state[type].pageInfo.endCursor || 0;
-            return fetchItems({
-                type,
-                after
-            }).then(({ items, pageInfo }) => commit("SET_LIST", { items, pageInfo}))
-        },
+        //     const after = state[type].pageInfo.endCursor || 0;
+        //     return fetchItems({
+        //         type,
+        //         after
+        //     }).then(({ items, pageInfo }) => commit("SET_LIST", { items, pageInfo}))
+        // },
 
         FETCH_LIST_DATA: async ({ commit }, { type }) => {
-            console.log(type)
             commit("SET_ACTIVE_TYPE", { type });
-
             try {
-                const res = await _fetchItems();
-                console.log(res);
+                const res = await fetchItems();
+                let items = res.list;
+                const {
+                    pageNum,
+                    pageSize,
+                    total
+                } = res;
+
+                let pageInfo = {  
+                    pageNum,
+                    pageSize,
+                    total 
+                }
+                commit("SET_LIST", { items, pageInfo })
             } catch (err) {
                 console.log(err);
             }
-        }   
+        }
     }
 } 

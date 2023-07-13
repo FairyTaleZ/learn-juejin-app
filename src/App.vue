@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="m-top">
-      <router-link class="m-link" v-for="nav in navs" :key="nav.path" :to="nav.path">{nav.name}</router-link>
+      <router-link class="m-link" v-for="nav in navs" :key="nav.path" :to="nav.path">{{nav.name}}</router-link>
     </div>
     <div class="m-content">
         <router-view></router-view>
@@ -35,13 +35,33 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  overflow-y: scroll;
+}
+
+a {
+  text-decoration: none;
+  color: #007fff;
+}
+
+.m-top {
+  height: 60px;
+  width: 100%;
+  background: #007fff;
+}
+
+.m-content {
+  width: 360px;
+  border: 1px solid #eee;
+  background: #fff;
+  margin: 20px auto;
+  padding: 0 20px;
 }
 
 .m-link {
@@ -49,11 +69,18 @@ export default {
   color: #fff;
   height: 60px;
   line-height: 60px;
-  font-size: 10px;
+  font-size: 19px;
   padding: 0 20px;
 }
 
 .router-link-active {
   background: #00a6ff;
+}
+
+.m-side {
+  position: fixed;
+  left: 50%;
+  margin-left: 220px;
+  top: 100px;
 }
 </style>

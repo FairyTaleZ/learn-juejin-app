@@ -7,7 +7,7 @@ import axios from "axios";
 // });
 
 const instance = axios.create({
-  baseURL: "https://testapi.shanlangit.com/sl_bot_cs/api/",
+  baseURL: "https://testapi.shanlangit.com/",
   timeout: 1000,
   headers: {},
 });
@@ -17,13 +17,24 @@ const instance = axios.create({
 // 如果在请求过程中发生错误，第二个函数将被调用，它接收一个错误对象作为参数，并通过`Promise.reject()`将错误进行拒绝。
 // 这段代码的作用是创建了一个自定义的axios实例，并给该实例配置了基本的请求参数和响应拦截器。这个实例可以用于发送请求，并对响应进行统一的处理.
 
+// instance.interceptors.response.use(
+//   function ({ status, statusText, data }) {
+//     if (status !== 200) {
+//       return Promise.reject();
+//     }
+//     return data;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
+
 instance.interceptors.response.use(
-  function ({ status, statusText, data }) {
-    console.log("statusText", statusText)
+  function ({ status, data }) {
     if (status !== 200) {
       return Promise.reject();
     }
-    return data;
+    return data.data;
   },
   function (error) {
     return Promise.reject(error);
@@ -44,33 +55,33 @@ instance.interceptors.response.use(
 // 最后，函数返回一个包含了`items`和`pageInfo`的对象，即请求成功后提取的数据.
 
 
-const DATA_TYPE = {
-  new: "NEWEST",
-  hot: "POPULAR",
-  top: "THREE_DAYS_HOTTEST",
-};
+// const DATA_TYPE = {
+//   new: "NEWEST",
+//   hot: "POPULAR",
+//   top: "THREE_DAYS_HOTTEST",
+// };
 
-export const fetchItems = ({ type, after }) => {
-  return instance.post("/query", {
-      operationName: "",
-      query: "",
-      variables: { first: 20, after, order: DATA_TYPE[type] },
-      extensions: { query: { id: "21207e9ddb1de777adeaca7a2fb38030" } },
-    })
-    .then(({ data }) => {
-      const { edges, pageInfo } = data.articleFeed.items;
-      const items = edges.map(({ node }) => node);
-      return { items, pageInfo };
-    });
-};
+// export const fetchItems = ({ type, after }) => {
+//   return instance.post("/query", {
+//       operationName: "",
+//       query: "",
+//       variables: { first: 20, after, order: DATA_TYPE[type] },
+//       extensions: { query: { id: "21207e9ddb1de777adeaca7a2fb38030" } },
+//     })
+//     .then(({ data }) => {
+//       const { edges, pageInfo } = data.articleFeed.items;
+//       const items = edges.map(({ node }) => node);
+//       return { items, pageInfo };
+//     });
+// };
 
-export const _fetchItems = async () => {
-  console.log("!1111111111",instance)
-  const data = await instance.post("/draw/userCreation/selectedPagelist", {
+export const fetchItems = async () => {
+  // https://testapi.shanlangit.com/sl_bot_cs/api/draw/userCreation/selectedPagelist
+  const data = await instance.post("/sl_bot_cs/api/draw/userCreation/selectedPagelist", {
     pageNum: 1,
     pageSize: 100,
     "queryMap['origin_eq']": "2",
     _orderBy: "createTime desc"
   });
-  console.log("111111111111111", data);
+  return data;
 };
